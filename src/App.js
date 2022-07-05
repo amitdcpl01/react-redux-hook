@@ -1,7 +1,8 @@
-import { Container, Grid, Icon, Segment, Statistic } from 'semantic-ui-react';
+import { Container } from 'semantic-ui-react';
 import './App.css';
 import DisplayBalance from './components/DisplayBalance';
 import DisplayBalances from './components/DisplayBalances';
+import EntryLine from './components/EntryLine';
 import MainHeader from './components/MainHeader';
 import NewEntryForm from './components/NewEntryForm';
 
@@ -14,11 +15,11 @@ function App() {
         <Statistic.Label>Your Balance:</Statistic.Label>
         <Statistic.Value>2,550.53</Statistic.Value>
       </Statistic> */}
-     <DisplayBalances />
+      <DisplayBalances />
 
       {/* <Header as='h3'>History</Header> */}
       <MainHeader title='History' type='h3' />
-      <Segment color='red'>
+      {/* <Segment color='red'>
         <Grid columns={3} textAlign='right'>
           <Grid.Row>
             <Grid.Column width={10} textAlign='left'>Something</Grid.Column>
@@ -29,9 +30,11 @@ function App() {
             </Grid.Column>
           </Grid.Row>
         </Grid>
-      </Segment>
-
-      <Segment color='green'>
+      </Segment> */}
+      <EntryLine description='Income' value='$100.00' />
+      <EntryLine description='Expense' value='$10.00' isExpense />
+      <EntryLine description='Something' value='$20.00' />
+      {/* <Segment color='green'>
         <Grid columns={3} textAlign='right'>
           <Grid.Row>
             <Grid.Column width={10} textAlign='left'>Something else</Grid.Column>
@@ -42,9 +45,9 @@ function App() {
             </Grid.Column>
           </Grid.Row>
         </Grid>
-      </Segment>
+      </Segment> */}
 
-      <Segment color='red'>
+      {/* <Segment color='red'>
         <Grid columns={3} textAlign='right'>
           <Grid.Row>
             <Grid.Column width={10} textAlign='left'>Something urgent</Grid.Column>
@@ -55,7 +58,7 @@ function App() {
             </Grid.Column>
           </Grid.Row>
         </Grid>
-      </Segment>
+      </Segment> */}
 
       {/* <Header as='h3'> Add new transaction</Header> */}
       <MainHeader title='Add New Transaction' type='h3' />
