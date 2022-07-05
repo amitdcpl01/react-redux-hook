@@ -1,24 +1,66 @@
-import logo from './logo.svg';
+import { Container, Grid, Icon, Segment, Statistic } from 'semantic-ui-react';
 import './App.css';
+import DisplayBalance from './components/DisplayBalance';
+import DisplayBalances from './components/DisplayBalances';
+import MainHeader from './components/MainHeader';
+import NewEntryForm from './components/NewEntryForm';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      <MainHeader title='Budget' ></MainHeader>
+      <DisplayBalance title='Your Balance:' value='2,550.53' size='small' />
+      {/* <Statistic size='small'>
+        <Statistic.Label>Your Balance:</Statistic.Label>
+        <Statistic.Value>2,550.53</Statistic.Value>
+      </Statistic> */}
+     <DisplayBalances />
+
+      {/* <Header as='h3'>History</Header> */}
+      <MainHeader title='History' type='h3' />
+      <Segment color='red'>
+        <Grid columns={3} textAlign='right'>
+          <Grid.Row>
+            <Grid.Column width={10} textAlign='left'>Something</Grid.Column>
+            <Grid.Column width={3} textAlign='right'>$10.00</Grid.Column>
+            <Grid.Column width={3}>
+              <Icon name='edit' bordered />
+              <Icon name='trash' bordered />
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </Segment>
+
+      <Segment color='green'>
+        <Grid columns={3} textAlign='right'>
+          <Grid.Row>
+            <Grid.Column width={10} textAlign='left'>Something else</Grid.Column>
+            <Grid.Column width={3} textAlign='right'>$20.00</Grid.Column>
+            <Grid.Column width={3}>
+              <Icon name='edit' bordered />
+              <Icon name='trash' bordered />
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </Segment>
+
+      <Segment color='red'>
+        <Grid columns={3} textAlign='right'>
+          <Grid.Row>
+            <Grid.Column width={10} textAlign='left'>Something urgent</Grid.Column>
+            <Grid.Column width={3} textAlign='right'>$30.00</Grid.Column>
+            <Grid.Column width={3}>
+              <Icon name='edit' bordered />
+              <Icon name='trash' bordered />
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </Segment>
+
+      {/* <Header as='h3'> Add new transaction</Header> */}
+      <MainHeader title='Add New Transaction' type='h3' />
+      <NewEntryForm />
+    </Container>
   );
 }
 
