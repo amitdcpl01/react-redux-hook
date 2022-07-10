@@ -1,12 +1,28 @@
+import React, { useState } from 'react';
 import { Container } from 'semantic-ui-react';
 import './App.css';
 import DisplayBalance from './components/DisplayBalance';
 import DisplayBalances from './components/DisplayBalances';
-import EntryLine from './components/EntryLine';
 import MainHeader from './components/MainHeader';
 import NewEntryForm from './components/NewEntryForm';
+import EntryLines from './components/EntryLines';
 
 function App() {
+  const [entries, setEntries] = useState(initialEntries);
+  // const  deleteEntry = (id) =>{}
+  function deleteEntry(id) {
+    const result = entries.filter(entry => entry.id !== id);
+    console.log(`entries`, entries);
+    console.log(`result`, result);
+    setEntries(result);
+  }
+
+  function addEntry(description, value, isExpense) {
+    const result = entries.concat({ id: entries.length + 1, description, value, isExpense });
+    console.log(`entries`, entries);
+    console.log(`result`, result);
+    setEntries(result);
+  }
   return (
     <Container>
       <MainHeader title='Budget' ></MainHeader>
@@ -31,9 +47,15 @@ function App() {
           </Grid.Row>
         </Grid>
       </Segment> */}
-      <EntryLine description='Income' value='$100.00' />
-      <EntryLine description='Expense' value='$10.00' isExpense />
-      <EntryLine description='Something' value='$20.00' />
+      {/* {entries.map(entry => (
+        <EntryLine description={entry.description} value={entry.value} isExpense={entry.isExpense} />
+      ))} */}
+
+      <EntryLines entries={entries} deleteEntry={deleteEntry}></EntryLines>
+      <br />
+
+      {/* <EntryLine description='Expense' value='$10.00' isExpense />
+      <EntryLine description='Something' value='$20.00' /> */}
       {/* <Segment color='green'>
         <Grid columns={3} textAlign='right'>
           <Grid.Row>
@@ -62,9 +84,36 @@ function App() {
 
       {/* <Header as='h3'> Add new transaction</Header> */}
       <MainHeader title='Add New Transaction' type='h3' />
-      <NewEntryForm />
+      <NewEntryForm addEntry= {addEntry}/>
     </Container>
   );
 }
 
 export default App;
+
+var initialEntries = [
+  {
+    id: 1,
+    description: "Work income",
+    value: "$1000,00",
+    isExpense: false
+  },
+  {
+    id: 2,
+    description: "Water bill",
+    value: "$50,00",
+    isExpense: true
+  },
+  {
+    id: 3,
+    description: "Rent",
+    value: "$300,00",
+    isExpense: true
+  },
+  {
+    id: 4,
+    description: "Power bill",
+    value: "$30,00",
+    isExpense: true
+  }
+];
