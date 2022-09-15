@@ -68,3 +68,12 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+We recommend using the configureStore method of the @reduxjs/toolkit package, which replaces createStore.
+
+Redux Toolkit is our recommended approach for writing Redux logic today, including store setup, reducers, data fetching, and more.
+
+For more details, please read this Redux docs page: https://redux.js.org/introduction/why-rtk-is-redux-today
+
+configureStore from Redux Toolkit is an improved version of createStore that simplifies setup and helps avoid common bugs.

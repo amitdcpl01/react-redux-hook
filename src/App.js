@@ -8,7 +8,8 @@ import NewEntryForm from './components/NewEntryForm';
 import EntryLines from './components/EntryLines';
 import ModalEdit from './components/ModalEdit';
 import { useEffect } from 'react';
-
+// import { configureStore } from '@reduxjs/toolkit';
+import { createStore } from 'redux';
 
 function App() {
   const [entries, setEntries] = useState(initialEntries);
@@ -31,6 +32,7 @@ function App() {
       setEntries(newEntries);
       resetEntry();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
 
   useEffect(() => {
@@ -47,6 +49,46 @@ function App() {
     setIncomeTotal(totalIncomes);
     // console.log(`total income are:${totalIncomes} and total expenses are:${totalExpenses}`);
   }, [entries]);
+
+  ///// create a store
+  const store = createStore((state = initialEntries, action) => {
+    // console.log(action);
+    let newEntries;
+    switch (action.type) {
+      case 'ADD_ENTRY':
+        newEntries = state.concat({ ...action.payload });
+        return newEntries;
+
+      case 'REMOVE_ENTRY':
+        newEntries = state.filter(entry => entry.id !== action.payload.id);
+        return newEntries;
+
+      default:
+        return state;
+    }
+    // return state;
+  })
+  // console.log('store before:', store.getState());
+  store.subscribe(() => {
+    console.log('store:', store.getState());
+  })
+  ///// adding action
+  const payload_add = {
+    id: 5,
+    description: "Hello from redux",
+    value: 100,
+    isExpense: false
+  };
+  const payload_remove = {
+    id: 1
+  };
+
+  function addEntryRedux(payload){
+    return { type: 'ADD_ENTRY', payload };
+  }
+  store.dispatch( addEntryRedux(payload_add));
+  store.dispatch({ type: 'REMOVE_ENTRY', payload: payload_remove });
+  // console.log('store after:', store.getState());
 
   // const  deleteEntry = (id) =>{}
   function deleteEntry(id) {
@@ -91,7 +133,7 @@ function App() {
         <Statistic.Label>Your Balance:</Statistic.Label>
         <Statistic.Value>2,550.53</Statistic.Value>
       </Statistic> */}
-      <DisplayBalances  incomeTotal = {incomeTotal} expenseTotal = {expenseTotal}/>
+      <DisplayBalances incomeTotal={incomeTotal} expenseTotal={expenseTotal} />
 
       {/* <Header as='h3'>History</Header> */}
       <MainHeader title='History' type='h3' />
