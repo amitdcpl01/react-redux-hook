@@ -20,7 +20,7 @@ export default reducer;
 var initialEntries = [
     {
         id: 1,
-        description: "Work income new",
+        description: "Work income new1",
         value: 1000.00,
         isExpense: false
     },
