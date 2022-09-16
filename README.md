@@ -77,3 +77,7 @@ Redux Toolkit is our recommended approach for writing Redux logic today, includi
 For more details, please read this Redux docs page: https://redux.js.org/introduction/why-rtk-is-redux-today
 
 configureStore from Redux Toolkit is an improved version of createStore that simplifies setup and helps avoid common bugs.
+
+sudo npm i -g json-server
+json-server --watch db.json
+ npm -D concurrently   

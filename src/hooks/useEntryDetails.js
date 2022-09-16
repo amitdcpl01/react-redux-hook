@@ -32,6 +32,7 @@ function useEntryDetails(desc = "", val = "", isExp = true) {
         dispatch(
             closeEditModal()
         );
+        resetValues();
     }
 
     function addEntry() {
@@ -42,10 +43,15 @@ function useEntryDetails(desc = "", val = "", isExp = true) {
             isExpense
         })
         );
-        setDescription('');
-        SetValue('');
-        setIsExpense(true);
+        resetValues();
     }
+
+function resetValues(){
+    setDescription('');
+    SetValue('');
+    setIsExpense(true);
+}
+
     return {
         description, setDescription, value, SetValue, isExpense, setIsExpense, addEntry, updateEntry
     }
