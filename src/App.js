@@ -10,33 +10,22 @@ import ModalEdit from './components/ModalEdit';
 import { useEffect } from 'react';
 // import { configureStore } from '@reduxjs/toolkit';
 // import { createStore, combineReducers } from 'redux';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 
 
 function App() {
-  const [description, setDescription] = useState('');
-  const [value, SetValue] = useState('');
-  const [isExpense, setIsExpense] = useState(true);
-  const [isOpen, setIsOpen] = useState(false);
-  const [entryId, setEntryId] = useState();
   const [incomeTotal, setIncomeTotal] = useState(0);
   const [expenseTotal, setExpenseTotal] = useState(0);
   const [total, setTotal] = useState(0);
+  const [entry, setEntry] = useState();
   const entries = useSelector(state => state.entries);
-  const isOpenRedux = useSelector (state => state.modals.isOpen);
+  const { isOpen, id } = useSelector(state => state.modals);
 
   useEffect(() => {
-    if (!isOpen && entryId) {
-      const index = entries.findIndex(entry => entry.id === entryId);
-      const newEntries = [...entries];
-      newEntries[index].description = description;
-      newEntries[index].value = value;
-      newEntries[index].isExpense = isExpense;
-      // setEntries(newEntries);
-      resetEntry();
-    }
+    const index = entries.findIndex(entry => entry.id === id);
+    setEntry(entries[index]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOpen]);
+  }, [isOpen, id]);
 
   useEffect(() => {
     let totalIncomes = 0;
@@ -52,33 +41,6 @@ function App() {
     setIncomeTotal(totalIncomes);
     // console.log(`total income are:${totalIncomes} and total expenses are:${totalExpenses}`);
   }, [entries]);
- 
-  function editEntry(id) {
-    console.log(`edit for id ${id}`);
-    if (id) {
-      const index = entries.findIndex(entry => entry.id === id);
-      const entry = entries[index];
-      setEntryId(id);
-      setDescription(entry.description);
-      SetValue(entry.value);
-      setIsExpense(entry.isExpense);
-      setIsOpen(true);
-    }
-  }
-
-  function addEntry() {
-    const result = entries.concat({ id: entries.length + 1, description, value, isExpense });
-    console.log(`entries`, entries);
-    console.log(`result`, result);
-    // setEntries(result);
-    resetEntry();
-  }
-
-  function resetEntry() {
-    setDescription('');
-    SetValue('');
-    setIsExpense(true);
-  }
 
   return (
     <Container>
@@ -88,30 +50,13 @@ function App() {
       <MainHeader title='History' type='h3' />
       <EntryLines
         entries={entries}
-        editEntry={editEntry}
       />
       <br />
       {/* <Header as='h3'> Add new transaction</Header> */}
       <MainHeader title='Add New Transaction' type='h3' />
-      <NewEntryForm
-        addEntry={addEntry}
-        description={description}
-        value={value}
-        isExpense={isExpense}
-        setDescription={setDescription}
-        SetValue={SetValue}
-        setIsExpense={setIsExpense}
-      />
+      <NewEntryForm />
       <ModalEdit
-        isOpen={isOpenRedux}
-        setIsOpen={setIsOpen}
-        addEntry={addEntry}
-        description={description}
-        value={value}
-        isExpense={isExpense}
-        setDescription={setDescription}
-        SetValue={SetValue}
-        setIsExpense={setIsExpense}
+        isOpen={isOpen} {...entry}
       />
     </Container>
   );
