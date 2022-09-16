@@ -9,7 +9,9 @@ import EntryLines from './components/EntryLines';
 import ModalEdit from './components/ModalEdit';
 import { useEffect } from 'react';
 // import { configureStore } from '@reduxjs/toolkit';
-import { createStore } from 'redux';
+import { createStore, combineReducers } from 'redux';
+import {useSelector} from 'react-redux';
+
 
 function App() {
   const [entries, setEntries] = useState(initialEntries);
@@ -21,6 +23,7 @@ function App() {
   const [incomeTotal, setIncomeTotal] = useState(0);
   const [expenseTotal, setExpenseTotal] = useState(0);
   const [total, setTotal] = useState(0);
+  const entriesRedux = useSelector(state => state.entries);
 
   useEffect(() => {
     if (!isOpen && entryId) {
@@ -49,48 +52,7 @@ function App() {
     setIncomeTotal(totalIncomes);
     // console.log(`total income are:${totalIncomes} and total expenses are:${totalExpenses}`);
   }, [entries]);
-
-  ///// create a store
-  const store = createStore((state = initialEntries, action) => {
-    // console.log(action);
-    let newEntries;
-    switch (action.type) {
-      case 'ADD_ENTRY':
-        newEntries = state.concat({ ...action.payload });
-        return newEntries;
-
-      case 'REMOVE_ENTRY':
-        newEntries = state.filter(entry => entry.id !== action.payload.id);
-        return newEntries;
-
-      default:
-        return state;
-    }
-    // return state;
-  })
-  // console.log('store before:', store.getState());
-  store.subscribe(() => {
-    console.log('store:', store.getState());
-  })
-  ///// adding action
-  const payload_add = {
-    id: 5,
-    description: "Hello from redux",
-    value: 100,
-    isExpense: false
-  };
-  const payload_remove = {
-    id: 1
-  };
-
-  function addEntryRedux(payload){
-    return { type: 'ADD_ENTRY', payload };
-  }
-  store.dispatch( addEntryRedux(payload_add));
-  store.dispatch({ type: 'REMOVE_ENTRY', payload: payload_remove });
-  // console.log('store after:', store.getState());
-
-  // const  deleteEntry = (id) =>{}
+ 
   function deleteEntry(id) {
     const result = entries.filter(entry => entry.id !== id);
     console.log(`entries`, entries);
@@ -154,7 +116,7 @@ function App() {
       ))} */}
 
       <EntryLines
-        entries={entries}
+        entries={entriesRedux}
         deleteEntry={deleteEntry}
         editEntry={editEntry}
       />
@@ -218,27 +180,27 @@ export default App;
 
 var initialEntries = [
   {
-    id: 1,
-    description: "Work income",
-    value: 1000.00,
-    isExpense: false
+      id: 1,
+      description: "Work income",
+      value: 1000.00,
+      isExpense: false
   },
   {
-    id: 2,
-    description: "Water bill",
-    value: 50.00,
-    isExpense: true
+      id: 2,
+      description: "Water bill",
+      value: 50.00,
+      isExpense: true
   },
   {
-    id: 3,
-    description: "Rent",
-    value: 300.00,
-    isExpense: true
+      id: 3,
+      description: "Rent",
+      value: 300.00,
+      isExpense: true
   },
   {
-    id: 4,
-    description: "Power bill",
-    value: 30.00,
-    isExpense: true
+      id: 4,
+      description: "Power bill",
+      value: 30.00,
+      isExpense: true
   }
 ];
